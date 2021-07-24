@@ -1,0 +1,30 @@
+#+TITLE: Dungeon Crawl Design Document
+
+* Project Name: Rusty Roguelike
+** Short Description
+A Dungeon crawler with procedurally generated levels, monsters of increasing difficulty, and turn based movement
+** Story
+The hero's hometown is suffering from a plague of monsters. Welling up from the deep, they seem unstoppable. Legend tells of the Amulet of Yala that can be used to stem the tide. After a long night at the tavern, the hero promises to save the day - and sets forth into the dungeon.
+** Basic Game Loops
+1. Enter the dungeon level.
+2. Explore, revealing the map.
+3. Encounter enemies whom the player fights or flees from.
+4. Find powerups and use them to strengthen the player.
+5. Locate the exit - go to 1.
+** MVP
+*** TODO Create a basic dungeon map
+*** TODO Place the player and let them walk around
+*** TODO Spawn monsters, draw them and let the player kill them by walking into them.
+*** TODO Add health and a combat system that uses it.
+*** TODO Add healing potions.
+*** TODO Display a "game over" screen when the player dies.
+*** TODO Add the Amulet of Yala to the level and let the player win by reaching it.
+** Stretch Goals :OPTIONAL:
+*** TODO Add fields of view
+*** TODO Add more interesting dungeon designs
+*** TODO Add some dungeon themes.
+*** TODO Add multiple layers to the dungeon, with the Amulet on the last one.
+*** TODO Add varied weapons to the game.
+*** TODO Move to a data driven design for spawning enemies.
+*** TODO Consider some visual effects to make combat more visceral.
+*** TODO Consider keeping score.
