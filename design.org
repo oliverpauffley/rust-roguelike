@@ -11,6 +11,35 @@ The hero's hometown is suffering from a plague of monsters. Welling up from the 
 3. Encounter enemies whom the player fights or flees from.
 4. Find powerups and use them to strengthen the player.
 5. Locate the exit - go to 1.
+** Turn Structure
+#+begin_src plantuml :file turn_structure.png
+skinparam linetype ortho
+state AwaitingInput
+AwaitingInput:Poll Input
+AwaitingInput:Redraw Screen
+
+state PlayerTurn
+PlayerTurn: Apply Movement
+PlayerTurn: Collsions
+PlayerTurn: Redraw Screen
+
+
+state MonsterTurn
+MonsterTurn:Random Movement
+MonsterTurn:Apply Movement
+MonsterTurn:Collisions
+MonsterTurn:Redraw Screen
+MonsterTurn:End Turn
+
+AwaitingInput -> PlayerTurn
+PlayerTurn -> MonsterTurn
+MonsterTurn -> AwaitingInput
+
+#+end_src
+
+#+RESULTS:
+[[file:turn_structure.png]]
+
 ** MVP
 *** TODO Create a basic dungeon map
 *** TODO Place the player and let them walk around
