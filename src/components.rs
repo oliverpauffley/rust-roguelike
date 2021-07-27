@@ -14,3 +14,7 @@ pub struct Player;
 /// Enemy is a tag component to signal an entity is a bad guy.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Enemy;
+
+/// MovingRandomly signals an entity should move around at random.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct MovingRandomly;
