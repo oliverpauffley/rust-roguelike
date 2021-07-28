@@ -18,3 +18,10 @@ pub struct Enemy;
 /// MovingRandomly signals an entity should move around at random.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct MovingRandomly;
+
+/// WantsToMove is a message representing the intent to move.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct WantsToMove {
+    pub entity: Entity,
+    pub destination: Point,
+}
