@@ -46,7 +46,7 @@ pub fn player_input(
                         entity: player_entity,
                         destination,
                     },
-                ))
+                ));
             }
         };
         *turn_state = TurnState::PlayerTurn;
