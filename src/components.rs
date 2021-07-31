@@ -25,3 +25,20 @@ pub struct WantsToMove {
     pub entity: Entity,
     pub destination: Point,
 }
+
+/// WantsToAttack is a message representing the intent to attack.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct WantsToAttack {
+    pub attacker: Entity,
+    pub victim: Entity,
+}
+/// Health represents the hit points of a creature.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Health {
+    pub current: i32,
+    pub max: i32,
+}
+
+/// Name provides an identifer for an entity.
+#[derive(Clone, PartialEq)]
+pub struct Name(pub String);
