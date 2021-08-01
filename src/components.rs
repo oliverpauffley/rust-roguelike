@@ -46,3 +46,11 @@ pub struct Health {
 /// Name provides an identifer for an entity.
 #[derive(Clone, PartialEq)]
 pub struct Name(pub String);
+
+/// Item denotes an object that can be carried.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Item;
+
+/// AmuletOfYala denotes the win condition of the game. Pick up this item and you have won.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct AmuletOfYala;
