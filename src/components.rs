@@ -19,6 +19,10 @@ pub struct Enemy;
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct MovingRandomly;
 
+/// Chasing player signals a monster will chase the player (if in vision).
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct ChasingPlayer;
+
 /// WantsToMove is a message representing the intent to move.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct WantsToMove {
