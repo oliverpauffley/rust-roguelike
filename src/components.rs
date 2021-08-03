@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use std::collections::HashSet;
 
 /// Render describes the color and symbol needed to draw an entity.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -54,3 +55,29 @@ pub struct Item;
 /// AmuletOfYala denotes the win condition of the game. Pick up this item and you have won.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct AmuletOfYala;
+
+/// FieldOfView gives an entity vision of the map.
+#[derive(Clone, Debug, PartialEq)]
+pub struct FieldOfView {
+    pub visible_tiles: HashSet<Point>,
+    pub radius: i32,
+    pub is_dirty: bool,
+}
+
+impl FieldOfView {
+    pub fn new(radius: i32) -> Self {
+        Self {
+            visible_tiles: HashSet::new(),
+            radius,
+            is_dirty: true,
+        }
+    }
+
+    pub fn clone_dirty(&self) -> Self {
+        Self {
+            visible_tiles: HashSet::new(),
+            radius: self.radius,
+            is_dirty: true,
+        }
+    }
+}
