@@ -81,3 +81,17 @@ impl FieldOfView {
         }
     }
 }
+
+/// ProvidesHealing gives an entity the ability to return hp to the player.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct ProvidesHealing {
+    pub amount: i32,
+}
+
+/// ProvidesDungeonMap is a tag for an entity that reveals the dungeon layout.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct ProvidesDungeonMap;
+
+/// Carried allows an entity to be picked up.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Carried(pub Entity);
