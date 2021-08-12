@@ -95,3 +95,10 @@ pub struct ProvidesDungeonMap;
 /// Carried allows an entity to be picked up.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Carried(pub Entity);
+
+/// ActivateItem is a message that an entity wants to use another entity
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct ActivateItem {
+    pub used_by: Entity,
+    pub item: Entity,
+}
