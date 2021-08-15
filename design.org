@@ -41,18 +41,18 @@ MonsterTurn -> AwaitingInput
 [[file:turn_structure.png]]
 
 ** MVP
-*** TODO Create a basic dungeon map
-*** TODO Place the player and let them walk around
-*** TODO Spawn monsters, draw them and let the player kill them by walking into them.
-*** TODO Add health and a combat system that uses it.
-*** TODO Add healing potions.
-*** TODO Display a "game over" screen when the player dies.
-*** TODO Add the Amulet of Yala to the level and let the player win by reaching it.
+*** DONE Create a basic dungeon map
+*** DONE Place the player and let them walk around
+*** DONE Spawn monsters, draw them and let the player kill them by walking into them.
+*** DONE Add health and a combat system that uses it.
+*** DONE Add healing potions.
+*** DONE Display a "game over" screen when the player dies.
+*** DONE Add the Amulet of Yala to the level and let the player win by reaching it.
 ** Stretch Goals :OPTIONAL:
-*** TODO Add fields of view
-*** TODO Add more interesting dungeon designs
-*** TODO Add some dungeon themes.
-*** TODO Add multiple layers to the dungeon, with the Amulet on the last one.
+*** DONE Add fields of view
+*** DONE Add more interesting dungeon designs
+*** DONE Add some dungeon themes.
+*** DONE Add multiple layers to the dungeon, with the Amulet on the last one.
 *** TODO Add varied weapons to the game.
 *** TODO Move to a data driven design for spawning enemies.
 *** TODO Consider some visual effects to make combat more visceral.
