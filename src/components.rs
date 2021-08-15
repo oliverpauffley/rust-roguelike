@@ -10,7 +10,9 @@ pub struct Render {
 
 /// Player is a tag component to signal an entity is a player.
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct Player;
+pub struct Player {
+    pub map_level: u32,
+}
 
 /// Enemy is a tag component to signal an entity is a bad guy.
 #[derive(Clone, Copy, Debug, PartialEq)]

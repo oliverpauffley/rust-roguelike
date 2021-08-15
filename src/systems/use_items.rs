@@ -16,7 +16,6 @@ pub fn use_items(ecs: &mut SubWorld, commands: &mut CommandBuffer, #[resource] m
             let item = ecs.entry_ref(activate.item);
             if let Ok(item) = item {
                 if let Ok(healing) = item.get_component::<ProvidesHealing>() {
-                    println!("healing for {}", healing.amount);
                     healing_to_apply.push((activate.used_by, healing.amount));
                 }
 
@@ -33,7 +32,6 @@ pub fn use_items(ecs: &mut SubWorld, commands: &mut CommandBuffer, #[resource] m
             // try and get the entity that used the item.
             if let Ok(health) = target.get_component_mut::<Health>() {
                 // check if the entity has a health component.
-                println!("healing for {}", heal.1);
                 health.current = i32::min(health.max, health.current + heal.1);
             }
         }
