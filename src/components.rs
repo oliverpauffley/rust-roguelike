@@ -104,3 +104,11 @@ pub struct ActivateItem {
     pub used_by: Entity,
     pub item: Entity,
 }
+
+/// Damage decribes the hit point reduction from an entity.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Damage(pub i32);
+
+/// Weapon is a tag to set an item as damaging.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Weapon;
