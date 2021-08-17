@@ -53,7 +53,12 @@ MonsterTurn -> AwaitingInput
 *** DONE Add more interesting dungeon designs
 *** DONE Add some dungeon themes.
 *** DONE Add multiple layers to the dungeon, with the Amulet on the last one.
-*** TODO Add varied weapons to the game.
-*** TODO Move to a data driven design for spawning enemies.
-*** TODO Consider some visual effects to make combat more visceral.
-*** TODO Consider keeping score.
+*** DONE Add varied weapons to the game.
+*** DONE Move to a data driven design for spawning enemies.
+** After Book
+*** TODO change the graphics to ascii style
+*** TODO implement builder chains
+*** TODO scenery (grass, water etc)
+*** TODO levels/progression
+*** TODO inventory system
+*** TODO better combat system
