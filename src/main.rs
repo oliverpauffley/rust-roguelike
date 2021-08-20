@@ -233,16 +233,19 @@ impl GameState for State {
 }
 
 fn main() -> BError {
+    let dungeonFont = "curses16x16.png";
+    //let dungeonFont = "dungeonfont.png";
+
     let context = BTermBuilder::new()
         .with_title("Rusty Roguelike")
         .with_fps_cap(30.0)
         .with_dimensions(DISPLAY_WIDTH, DISPLAY_HEIGHT)
         .with_tile_dimensions(32, 32)
         .with_resource_path("resources/")
-        .with_font("dungeonfont.png", 32, 32)
+        .with_font(dungeonFont, 16, 16) // change to match the tile size
         .with_font("terminal8x8.png", 8, 8)
-        .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, "dungeonfont.png")
-        .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, "dungeonfont.png")
+        .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, dungeonFont)
+        .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, dungeonFont)
         .with_simple_console_no_bg(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, "terminal8x8.png")
         .build()?;
 

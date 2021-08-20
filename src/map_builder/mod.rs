@@ -18,7 +18,7 @@ trait MapArchitect {
 }
 
 pub trait MapTheme: Sync + Send {
-    fn tile_to_render(&self, tile_type: TileType) -> FontCharType;
+    fn tile_to_render(&self, map: &Map, idx: usize) -> Render;
 }
 
 const NUM_ROOMS: usize = 20;
