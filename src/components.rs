@@ -6,7 +6,13 @@ use std::collections::HashSet;
 pub struct Render {
     pub color: ColorPair,
     pub glyph: FontCharType,
+    pub render_order: u32, // the order of rendering from 0 (first).
 }
+
+pub const PLAYER_RENDER_ORDER: u32 = 0;
+pub const MONSTER_RENDER_ORDER: u32 = 1;
+pub const ITEM_RENDER_ORDER: u32 = 2;
+pub const MAP_RENDER_ORDER: u32 = 3;
 
 /// Player is a tag component to signal an entity is a player.
 #[derive(Clone, Copy, Debug, PartialEq)]

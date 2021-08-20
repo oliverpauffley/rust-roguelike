@@ -14,11 +14,13 @@ pub fn entity_render(ecs: &SubWorld, #[resource] camera: &Camera) {
     let mut fov = <&FieldOfView>::query().filter(component::<Player>());
     let player_fov = fov.iter(ecs).nth(0).unwrap();
 
-    renderables
+    let mut to_render: Vec<(&Point, &Render)> = renderables
         .iter(ecs)
         .filter(|(pos, _)| player_fov.visible_tiles.contains(&pos))
-        .for_each(|(pos, render)| {
-            draw_batch.set(*pos - offset, render.color, render.glyph);
-        });
+        .collect();
+    to_render.sort_by(|&a, &b| b.1.render_order.cmp(&a.1.render_order));
+    for entity in to_render {
+        draw_batch.set(*entity.0 - offset, entity.1.color, entity.1.glyph);
+    }
     draw_batch.submit(5000).expect("Batch error") // 5000 to leave room for map elements/ui
 }

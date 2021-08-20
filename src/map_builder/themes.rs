@@ -14,17 +14,20 @@ impl MapTheme for DungeonTheme {
             TileType::Floor => Render {
                 glyph: to_cp437('.'),
                 color: ColorPair::new(WHITE, BLACK),
+                render_order: MAP_RENDER_ORDER,
             },
             TileType::Wall => {
                 let point = map.index_to_point2d(idx);
                 Render {
                     glyph: wall_glyph(map, point.x, point.y),
                     color: ColorPair::new(WHITE, BLACK),
+                    render_order: MAP_RENDER_ORDER,
                 }
             }
             TileType::Exit => Render {
                 glyph: to_cp437('>'),
                 color: ColorPair::new(WHITE, BLACK),
+                render_order: MAP_RENDER_ORDER,
             },
         }
     }
@@ -44,14 +47,17 @@ impl MapTheme for ForestTheme {
             TileType::Floor => Render {
                 glyph: to_cp437(','),
                 color: ColorPair::new(GREEN, BLACK),
+                render_order: MAP_RENDER_ORDER,
             },
             TileType::Wall => Render {
                 glyph: to_cp437('♠'),
                 color: ColorPair::new(GREEN, BLACK),
+                render_order: MAP_RENDER_ORDER,
             },
             TileType::Exit => Render {
                 glyph: to_cp437('>'),
                 color: ColorPair::new(WHITE, BLACK),
+                render_order: MAP_RENDER_ORDER,
             },
         }
     }

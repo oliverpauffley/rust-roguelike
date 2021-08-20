@@ -67,18 +67,29 @@ impl Templates {
         template: &Template,
         commands: &mut legion::systems::CommandBuffer,
     ) {
-        let entity = commands.push((
-            pt.clone(),
-            Render {
-                color: ColorPair::new(WHITE, BLACK),
-                glyph: to_cp437(template.glyph),
-            },
-            Name(template.name.clone()),
-        ));
+        let entity = commands.push((pt.clone(), Name(template.name.clone())));
         match template.entity_type {
-            EntityType::Item => commands.add_component(entity, Item {}),
+            EntityType::Item => {
+                commands.add_component(entity, Item {});
+                commands.add_component(
+                    entity,
+                    Render {
+                        color: ColorPair::new(WHITE, BLACK),
+                        glyph: to_cp437(template.glyph),
+                        render_order: ITEM_RENDER_ORDER,
+                    },
+                );
+            }
             EntityType::Enemy => {
                 commands.add_component(entity, Enemy {});
+                commands.add_component(
+                    entity,
+                    Render {
+                        color: ColorPair::new(WHITE, BLACK),
+                        glyph: to_cp437(template.glyph),
+                        render_order: MONSTER_RENDER_ORDER,
+                    },
+                );
                 commands.add_component(entity, FieldOfView::new(6));
                 commands.add_component(entity, ChasingPlayer {});
                 commands.add_component(
