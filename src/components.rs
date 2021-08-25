@@ -9,10 +9,11 @@ pub struct Render {
     pub render_order: u32, // the order of rendering from 0 (first).
 }
 
-pub const PLAYER_RENDER_ORDER: u32 = 0;
-pub const MONSTER_RENDER_ORDER: u32 = 1;
-pub const ITEM_RENDER_ORDER: u32 = 2;
-pub const MAP_RENDER_ORDER: u32 = 3;
+pub const PARTICLE_RENDER_ORDER: u32 = 0;
+pub const PLAYER_RENDER_ORDER: u32 = 1;
+pub const MONSTER_RENDER_ORDER: u32 = 2;
+pub const ITEM_RENDER_ORDER: u32 = 3;
+pub const MAP_RENDER_ORDER: u32 = 4;
 
 /// Player is a tag component to signal an entity is a player.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -88,6 +89,12 @@ impl FieldOfView {
             is_dirty: true,
         }
     }
+}
+
+/// ParticleLifetime sets the duration of a partice effect.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct ParticleLifetime {
+    pub lifetime_ms: f32,
 }
 
 /// ProvidesHealing gives an entity the ability to return hp to the player.

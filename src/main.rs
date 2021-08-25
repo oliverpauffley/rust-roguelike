@@ -1,3 +1,4 @@
+use crate::systems::particle_system::{cull_dead_particles, ParticleBuilder};
 use bracket_lib::prelude::*;
 use std::collections::HashSet;
 
@@ -52,12 +53,19 @@ impl State {
         let exit_idx = map_builder.map.point2d_to_index(map_builder.amulet_start);
         map_builder.map.tiles[exit_idx] = TileType::Exit;
 
-        spawn_level(&mut ecs, &mut rng, 0, &map_builder.monster_spawns);
+        spawn_level(
+            &mut ecs,
+            &mut resources,
+            &mut rng,
+            0,
+            &map_builder.monster_spawns,
+        );
 
         resources.insert(map_builder.map);
         resources.insert(Camera::new(map_builder.player_start));
         resources.insert(TurnState::AwaitingInput);
         resources.insert(map_builder.theme);
+        resources.insert(ParticleBuilder::new());
 
         Self {
             ecs,
@@ -126,11 +134,18 @@ impl State {
         let map_builder = MapBuilder::new(&mut rng);
         spawn_player(&mut self.ecs, map_builder.player_start);
         spawn_amulet_of_yala(&mut self.ecs, map_builder.amulet_start);
-        spawn_level(&mut self.ecs, &mut rng, 0, &map_builder.monster_spawns);
+        spawn_level(
+            &mut self.ecs,
+            &mut self.resources,
+            &mut rng,
+            0,
+            &map_builder.monster_spawns,
+        );
         self.resources.insert(map_builder.map);
         self.resources.insert(Camera::new(map_builder.player_start));
         self.resources.insert(TurnState::AwaitingInput);
         self.resources.insert(map_builder.theme);
+        self.resources.insert(ParticleBuilder::new());
     }
     fn advance_level(&mut self) {
         // find player
@@ -160,7 +175,7 @@ impl State {
                 cb.remove(*e);
             }
         }
-        cb.flush(&mut self.ecs);
+        cb.flush(&mut self.ecs, &mut self.resources);
 
         // set field of view to dirty
         <&mut FieldOfView>::query()
@@ -190,6 +205,7 @@ impl State {
 
         spawn_level(
             &mut self.ecs,
+            &mut self.resources,
             &mut rng,
             map_level as usize,
             &map_builder.monster_spawns,
@@ -198,6 +214,7 @@ impl State {
         self.resources.insert(Camera::new(map_builder.player_start));
         self.resources.insert(TurnState::AwaitingInput);
         self.resources.insert(map_builder.theme);
+        self.resources.insert(ParticleBuilder::new());
     }
 }
 
@@ -206,6 +223,9 @@ impl GameState for State {
         for x in 0..=2 {
             ctx.set_active_console(x);
             ctx.cls();
+            if x == 0 {
+                cull_dead_particles(&mut self.ecs, ctx);
+            }
         }
         self.resources.insert(ctx.key); // add the key pressed to the resouces so all systems can access.
         ctx.set_active_console(0);
@@ -233,7 +253,7 @@ impl GameState for State {
 }
 
 fn main() -> BError {
-    let dungeonFont = "curses16x16.png";
+    let dungeon_font = "curses16x16.png";
     //let dungeonFont = "dungeonfont.png";
 
     let context = BTermBuilder::new()
@@ -242,10 +262,10 @@ fn main() -> BError {
         .with_dimensions(DISPLAY_WIDTH, DISPLAY_HEIGHT)
         .with_tile_dimensions(32, 32)
         .with_resource_path("resources/")
-        .with_font(dungeonFont, 16, 16) // change to match the tile size
+        .with_font(dungeon_font, 16, 16) // change to match the tile size
         .with_font("terminal8x8.png", 8, 8)
-        .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, dungeonFont)
-        .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, dungeonFont)
+        .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, dungeon_font)
+        .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, dungeon_font)
         .with_simple_console_no_bg(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, "terminal8x8.png")
         .build()?;
 

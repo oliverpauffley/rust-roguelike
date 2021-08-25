@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::systems::particle_system::ParticleBuilder;
 
 #[system]
 #[read_component(WantsToAttack)]
@@ -6,7 +7,12 @@ use crate::prelude::*;
 #[write_component(Health)]
 #[read_component(Damage)]
 #[read_component(Carried)]
-pub fn combat(ecs: &mut SubWorld, commands: &mut CommandBuffer) {
+#[read_component(Point)]
+pub fn combat(
+    ecs: &mut SubWorld,
+    commands: &mut CommandBuffer,
+    #[resource] particle_system: &mut ParticleBuilder,
+) {
     let mut attackers = <(Entity, &WantsToAttack)>::query();
     let victims: Vec<(Entity, Entity, Entity)> = attackers
         .iter(ecs)
@@ -37,6 +43,17 @@ pub fn combat(ecs: &mut SubWorld, commands: &mut CommandBuffer) {
             .unwrap()
             .get_component::<Player>()
             .is_ok();
+
+        if let Ok(postion) = ecs.entry_ref(*victim).unwrap().get_component::<Point>() {
+            particle_system.request(
+                postion.x,
+                postion.y,
+                RGB::named(ORANGE),
+                RGB::named(BLACK),
+                to_cp437('█'),
+                200.0,
+            );
+        }
         if let Ok(mut health) = ecs
             .entry_mut(*victim)
             .unwrap()
