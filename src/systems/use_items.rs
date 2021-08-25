@@ -2,12 +2,20 @@
 
 use crate::prelude::*;
 
+use super::particle_system::ParticleBuilder;
+
 #[system]
 #[read_component(ActivateItem)]
 #[read_component(ProvidesHealing)]
 #[write_component(Health)]
 #[read_component(ProvidesDungeonMap)]
-pub fn use_items(ecs: &mut SubWorld, commands: &mut CommandBuffer, #[resource] map: &mut Map) {
+#[read_component(Point)]
+pub fn use_items(
+    ecs: &mut SubWorld,
+    commands: &mut CommandBuffer,
+    #[resource] map: &mut Map,
+    #[resource] particle_system: &mut ParticleBuilder,
+) {
     let mut healing_to_apply = Vec::<(Entity, i32)>::new();
 
     <(Entity, &ActivateItem)>::query()
@@ -33,6 +41,17 @@ pub fn use_items(ecs: &mut SubWorld, commands: &mut CommandBuffer, #[resource] m
             if let Ok(health) = target.get_component_mut::<Health>() {
                 // check if the entity has a health component.
                 health.current = i32::min(health.max, health.current + heal.1);
+            }
+
+            if let Ok(position) = target.get_component::<Point>() {
+                particle_system.request(
+                    position.x,
+                    position.y,
+                    RGB::named(DARKSEAGREEN),
+                    RGB::named(BLACK),
+                    to_cp437('♥'),
+                    200.0,
+                );
             }
         }
     }
