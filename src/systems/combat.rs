@@ -48,7 +48,7 @@ pub fn combat(
             particle_system.request(
                 postion.x,
                 postion.y,
-                RGB::named(ORANGE),
+                RGB::named(DARKRED),
                 RGB::named(BLACK),
                 to_cp437('█'),
                 200.0,

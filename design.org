@@ -56,7 +56,8 @@ MonsterTurn -> AwaitingInput
 *** DONE Add varied weapons to the game.
 *** DONE Move to a data driven design for spawning enemies.
 ** After Book
-*** TODO change the graphics to ascii style
+*** DONE change the graphics to ascii style
+*** DONE particle system
 *** TODO implement builder chains
 *** TODO scenery (grass, water etc)
 *** TODO levels/progression
