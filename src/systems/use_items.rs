@@ -10,6 +10,7 @@ use super::particle_system::ParticleBuilder;
 #[write_component(Health)]
 #[read_component(ProvidesDungeonMap)]
 #[read_component(Point)]
+#[read_component(Consumable)]
 pub fn use_items(
     ecs: &mut SubWorld,
     commands: &mut CommandBuffer,
@@ -30,9 +31,13 @@ pub fn use_items(
                 if let Ok(_mapper) = item.get_component::<ProvidesDungeonMap>() {
                     map.revealed_tiles.iter_mut().for_each(|t| *t = true);
                 }
+
+                if item.get_component::<Consumable>().is_ok() {
+                    println!("{:?}", &activate);
+                    commands.remove(activate.item) // remove the item
+                }
             }
-            commands.remove(activate.item); // remove the activate message
-            commands.remove(*entity) // remove the item
+            commands.remove(*entity); // remove the activate message
         });
 
     for heal in healing_to_apply.iter() {

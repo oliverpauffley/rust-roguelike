@@ -6,4 +6,6 @@ pub enum TurnState {
     GameOver,
     Victory,
     NextLevel,
+    ShowInventory,
+    ShowTargetting { range: i32, item: legion::Entity },
 }

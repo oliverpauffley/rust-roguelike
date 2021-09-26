@@ -32,12 +32,13 @@ mod prelude {
 
 use prelude::*;
 
-struct State {
+pub struct State {
     ecs: World,
     resources: Resources,
     input_systems: Schedule,
     player_systems: Schedule,
     monster_systems: Schedule,
+    inventory_systems: Schedule,
 }
 
 impl State {
@@ -73,6 +74,7 @@ impl State {
             input_systems: build_input_scheduler(),
             player_systems: build_player_scheduler(),
             monster_systems: build_monster_scheduler(),
+            inventory_systems: build_inventory_scheduler(),
         }
     }
     fn game_over(&mut self, ctx: &mut BTerm) {
@@ -220,7 +222,7 @@ impl State {
 
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
-        for x in 0..=2 {
+        for x in 0..=3 {
             ctx.set_active_console(x);
             ctx.cls();
             if x == 0 {
@@ -232,22 +234,33 @@ impl GameState for State {
         self.resources.insert(Point::from_tuple(ctx.mouse_pos()));
 
         let current_state = self.resources.get::<TurnState>().unwrap().clone();
+
         match current_state {
-            TurnState::AwaitingInput => self
-                .input_systems
-                .execute(&mut self.ecs, &mut self.resources),
-            TurnState::PlayerTurn => self
-                .player_systems
-                .execute(&mut self.ecs, &mut self.resources),
-            TurnState::MonsterTurn => self
-                .monster_systems
-                .execute(&mut self.ecs, &mut self.resources),
+            TurnState::AwaitingInput => {
+                self.input_systems
+                    .execute(&mut self.ecs, &mut self.resources);
+            }
+            TurnState::PlayerTurn => {
+                self.player_systems
+                    .execute(&mut self.ecs, &mut self.resources);
+            }
+            TurnState::MonsterTurn => {
+                self.monster_systems
+                    .execute(&mut self.ecs, &mut self.resources);
+            }
             TurnState::GameOver => {
                 self.game_over(ctx);
             }
+            TurnState::ShowInventory => {
+                self.inventory_systems
+                    .execute(&mut self.ecs, &mut self.resources);
+                render_draw_buffer(ctx).unwrap();
+            }
+            TurnState::ShowTargetting { range, item } => (),
             TurnState::Victory => self.victory(ctx),
             TurnState::NextLevel => self.advance_level(),
         }
+
         render_draw_buffer(ctx).expect("Render error");
     }
 }
@@ -266,6 +279,7 @@ fn main() -> BError {
         .with_font("terminal8x8.png", 8, 8)
         .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, dungeon_font)
         .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, dungeon_font)
+        .with_simple_console_no_bg(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, "terminal8x8.png")
         .with_simple_console_no_bg(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, "terminal8x8.png")
         .build()?;
 

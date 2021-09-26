@@ -61,6 +61,10 @@ pub struct Name(pub String);
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Item;
 
+/// Consumable is a tag for an item that is destroyed after use.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Consumable;
+
 /// AmuletOfYala denotes the win condition of the game. Pick up this item and you have won.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct AmuletOfYala;
@@ -121,6 +125,12 @@ pub struct ActivateItem {
 /// Damage decribes the hit point reduction from an entity.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Damage(pub i32);
+
+/// Ranged describes an entity with a distance limited affect.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Ranged {
+    pub range: i32,
+}
 
 /// Weapon is a tag to set an item as damaging.
 #[derive(Clone, Copy, Debug, PartialEq)]

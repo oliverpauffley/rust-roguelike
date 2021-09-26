@@ -17,6 +17,10 @@ pub fn player_input(
     if let Some(key) = *key {
         let mut players = <(Entity, &Point)>::query().filter(component::<Player>());
         let delta = match key {
+            VirtualKeyCode::I => {
+                *turn_state = TurnState::ShowInventory;
+                return;
+            }
             VirtualKeyCode::Left => Point::new(-1, 0),
             VirtualKeyCode::Right => Point::new(1, 0),
             VirtualKeyCode::Up => Point::new(0, -1),

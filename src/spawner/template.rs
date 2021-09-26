@@ -8,6 +8,7 @@ use std::fs::File;
 #[derive(Clone, Deserialize, Debug)]
 pub struct Template {
     pub entity_type: EntityType,
+    pub is_consumable: Option<bool>,
     pub levels: HashSet<usize>,
     pub frequency: i32,
     pub name: String,
@@ -15,6 +16,7 @@ pub struct Template {
     pub provides: Option<Vec<(String, i32)>>,
     pub hp: Option<i32>,
     pub base_damage: Option<i32>,
+    pub range: Option<i32>,
 }
 
 #[derive(Clone, Deserialize, Debug, PartialEq)]
@@ -72,6 +74,9 @@ impl Templates {
         match template.entity_type {
             EntityType::Item => {
                 commands.add_component(entity, Item {});
+                if template.is_consumable.unwrap_or(false) {
+                    commands.add_component(entity, Consumable);
+                }
                 commands.add_component(
                     entity,
                     Render {
@@ -108,6 +113,7 @@ impl Templates {
                 .for_each(|(provides, n)| match provides.as_str() {
                     "Healing" => commands.add_component(entity, ProvidesHealing { amount: *n }),
                     "MagicMap" => commands.add_component(entity, ProvidesDungeonMap {}),
+                    "MagicMissile" => commands.add_component(entity, Damage(8)),
                     _ => {
                         println!("Warning: we don't know how to provide {}", provides);
                     }
@@ -118,6 +124,10 @@ impl Templates {
             if template.entity_type == EntityType::Item {
                 commands.add_component(entity, Weapon {});
             }
+        }
+
+        if let Some(range) = &template.range {
+            commands.add_component(entity, Ranged { range: *range });
         }
     }
 }

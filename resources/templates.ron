@@ -2,20 +2,31 @@ Templates(
     entities: [
         Template(
             entity_type: Item,
+            is_consumable: Some(true),
             name: "Healing Potion", glyph: '!', levels: [0,1,2],
             provides: Some([("Healing", 6)]),
             frequency: 2
         ),
         Template(
             entity_type: Item,
+            is_consumable: Some(true),
             name: "Weak Healing Potion", glyph: '!', levels: [0,1],
             provides: Some([("Healing", 2)]),
             frequency: 2
         ),
         Template(
             entity_type: Item,
+            is_consumable: Some(true),
             name: "Dungeon Map", glyph: '{', levels: [0,1,2],
             provides: Some([("MagicMap", 0)]),
+            frequency: 1,
+        ),
+        Template(
+            entity_type: Item,
+            is_consumable: Some(true),
+            range: Some(6),
+            name: "Magic Missile Scroll", glyph: ')', levels: [0,1,2],
+            provides: Some([("MagicMissile", 8)]),
             frequency: 1,
         ),
         Template(
