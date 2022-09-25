@@ -153,8 +153,8 @@ impl State {
         // find player
         let player_entity = *<Entity>::query()
             .filter(component::<Player>())
-            .iter(&mut self.ecs)
-            .nth(0)
+            .iter(&self.ecs)
+            .next()
             .unwrap();
 
         // get things to keep
@@ -163,7 +163,7 @@ impl State {
 
         // find items being carried
         <(Entity, &Carried)>::query()
-            .iter(&mut self.ecs)
+            .iter(&self.ecs)
             .filter(|(_entity, carried)| carried.0 == player_entity)
             .map(|(e, _carry)| *e)
             .for_each(|e| {
@@ -171,7 +171,7 @@ impl State {
             });
 
         // drop everything else
-        let mut cb = CommandBuffer::new(&mut self.ecs);
+        let mut cb = CommandBuffer::new(&self.ecs);
         for e in Entity::query().iter(&self.ecs) {
             if !entities_to_keep.contains(e) {
                 cb.remove(*e);
@@ -233,7 +233,7 @@ impl GameState for State {
         ctx.set_active_console(0);
         self.resources.insert(Point::from_tuple(ctx.mouse_pos()));
 
-        let current_state = self.resources.get::<TurnState>().unwrap().clone();
+        let current_state = *self.resources.get::<TurnState>().unwrap();
 
         match current_state {
             TurnState::AwaitingInput => {

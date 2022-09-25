@@ -61,5 +61,5 @@ MonsterTurn -> AwaitingInput
 *** TODO implement builder chains
 *** TODO scenery (grass, water etc)
 *** TODO levels/progression
-*** TODO inventory system
+*** INPROGRESS inventory system
 *** TODO better combat system
